@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fashionhub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background: linear-gradient(rgb(247, 245, 246),rgb(243, 233, 239),rgb(235, 232, 234))">
+
+<header class="navbar">
+    <div><img src="images/fashionhub.jpg" alt="logo" height="90px" width="170Spx"></div>
+    <nav>
+        <a href="index.php">Home</a>
+        <a href="men.php">Men</a>
+        <a href="women.php">Women</a>
+        <a href="kids.php">Kids</a>
+        <a href="profile.php">Profile</a>
+    </nav>
+</header>
+
+    <div>
+        <img src="images/cover_page.jpg" alt="coverimage" width="85%" height="550px" class="center-img">
+    </div>
+
+<section class="products">
+    <h2>Our Products</h2>
+
+    <div class="product-container">
+
+        <?php
+        $products = [
+            ["name"=>"Girl's top", "price"=>"₹499", "image"=>"images/kidswear.jpg"],
+            ["name"=>"Women party wear saree", "price"=>"₹2,299", "image"=>"images/saree.jpg"],
+            ["name"=>"Men's solid shirt", "price"=>"₹999", "image"=>"images/shirt.jpg"],
+            ["name"=>"kids nightwear", "price"=>"₹399", "image"=>"images/kidsnightwear.jpg"],
+            ["name"=>"Women's Anarkali dress", "price"=>"₹799", "image"=>"images/women's_dress.jpg"],
+            ["name"=>"Men's Printed shirt", "price"=>"₹599", "image"=>"images/men's_printed_shirt.jpg"]
+        ];
+
+        foreach($products as $item){
+        ?>
+        <div class="product-card">
+            <img src="<?php echo $item['image']; ?>">
+            <h3><?php echo $item['name']; ?></h3>
+            <p><?php echo $item['price']; ?></p>
+            <button>Add to Cart</button>
+        </div>
+        <?php } ?>
+
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 Fashionhub | All Rights Reserved</p>
+</footer>
+
+</body>
+</html>
