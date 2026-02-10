@@ -1,45 +1,58 @@
 <?php
 session_start();
+include "db.php";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
+if (isset($_POST['login'])) {
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = $_POST['password'];
 
-    $users = file("users.txt");
+    $query = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
+    $user = mysqli_fetch_assoc($query);
 
-    foreach ($users as $user) {
-        list($storedUser, $storedPass) = explode("|", trim($user));
+    if ($user && password_verify($password, $user['password'])) {
 
-        if ($username == $storedUser && password_verify($password, $storedPass)) {
-            $_SESSION['user'] = $username;
-            header("Location: index.php");
-            exit();
-        }
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['user_name'] = $user['fullname'];
+
+        header("Location: index.php");
+        exit();
+
+    } else {
+        echo "<script>alert('Invalid Email or Password');</script>";
     }
-
-    $error = "Invalid username or password";
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login | Fashionhub</title>
+    <title>FashionHub | Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body style="background: linear-gradient(rgb(247, 245, 246),rgb(243, 233, 239),rgb(235, 232, 234))">
+<div class="login-container">
+    <div class="login-box">
+        <h1 class="brand">FashionHub</h1>
 
-<h2 align="center">Login</h2>
+        <h2>Login</h2>
 
-<form method="post" class="form-box">
-    <input type="text" name="username" placeholder="Username" required><br>
-    <input type="password" name="password" placeholder="Password" required><br>
-    <button type="submit">Login</button>
+        <form method="POST">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
 
-    <?php if(isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
+            <button type="submit" name="login">Login</button>
+        </form>
 
-    <p>New user? <a href="register.php">Register</a></p>
-</form>
+        <p class="signup-text">
+            Don’t have an account?
+            <a href="signup.php">Sign Up</a>
+        </p>
+    </div>
+</div>
 
+<footer>
+    <p>© 2026 Fashionhub | All Rights Reserved</p>
+</footer>
 </body>
 </html>
