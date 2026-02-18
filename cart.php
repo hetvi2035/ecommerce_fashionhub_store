@@ -1,5 +1,14 @@
 <?php
 session_start();
+if (isset($_POST['remove_item'])) {
+
+    $index = $_POST['remove_index'];
+
+    unset($_SESSION['cart'][$index]);
+
+    $_SESSION['cart'] = array_values($_SESSION['cart']);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -39,15 +48,21 @@ $total = 0;
 
 if (!empty($_SESSION['cart'])) {
 
-    foreach ($_SESSION['cart'] as $item) {
+    foreach ($_SESSION['cart'] as $index => $item) {
 ?>
+
         <div class="product-card">
-            <img src="<?php echo $item['image']; ?>" alt="">
+            <img src="<?php echo $item['image']; ?>" width="200">
+
             <h3><?php echo $item['name']; ?></h3>
             <p>₹<?php echo $item['price']; ?></p>
 
-            <button>Remove</button>
-            <button>Buy Now</button>
+            <form method="POST">
+                <input type="hidden" name="remove_index" value="<?php echo $index; ?>">
+                <button type="submit" name="remove_item">Remove</button>
+                <button type="submit" name="Buy Now">Buy Now</button>
+            </form>
+
         </div>
 
 <?php
@@ -60,6 +75,7 @@ if (!empty($_SESSION['cart'])) {
     echo "<p style='text-align:center;'>Cart is Empty</p>";
 }
 ?>
+
     </div>
 </section>
 
