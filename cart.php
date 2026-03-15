@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
 if (isset($_POST['remove_item'])) {
 
     $index = $_POST['remove_index'];
@@ -8,7 +13,6 @@ if (isset($_POST['remove_item'])) {
 
     $_SESSION['cart'] = array_values($_SESSION['cart']);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +22,7 @@ if (isset($_POST['remove_item'])) {
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body style="background: linear-gradient(rgb(247, 245, 246),rgb(243, 233, 239),rgb(235, 232, 234))">
+<body style="background: linear-gradient(rgb(247,245,246),rgb(243,233,239),rgb(235,232,234))">
 
 <header class="navbar">
     <div>
@@ -38,53 +42,68 @@ if (isset($_POST['remove_item'])) {
     </nav>
 </header>
 
-<h2 style="text-align: center;">Your Cart</h2>
+<h2 style="text-align:center;">Your Cart</h2>
 
-    <section class="products">
-    <div class="product-container">
+<section class="products">
+<div class="product-container">
 
 <?php
+
 $total = 0;
 
 if (!empty($_SESSION['cart'])) {
 
     foreach ($_SESSION['cart'] as $index => $item) {
+
 ?>
 
-        <div class="product-card">
-            <img src="<?php echo $item['image']; ?>" width="200">
+<div class="product-card">
 
-            <h3><?php echo $item['name']; ?></h3>
-            <p>₹<?php echo $item['price']; ?></p>
+<img src="<?php echo $item['image']; ?>" width="200">
 
-            <form method="POST">
-                <input type="hidden" name="remove_index" value="<?php echo $index; ?>">
-                <button type="submit" name="remove_item">Remove</button>
-                <button type="submit" name="Buy Now">Buy Now</button>
-            </form>
+<h3><?php echo $item['name']; ?></h3>
 
-        </div>
+<p>₹<?php echo $item['price']; ?></p>
+
+<form method="POST">
+<input type="hidden" name="remove_index" value="<?php echo $index; ?>">
+<button type="submit" name="remove_item">Remove</button>
+</form>
+
+<form action="checkout.php" method="POST">
+<input type="hidden" name="name" value="<?php echo $item['name']; ?>">
+<input type="hidden" name="price" value="<?php echo $item['price']; ?>">
+<input type="hidden" name="image" value="<?php echo $item['image']; ?>">
+<button type="submit">Buy Now</button>
+</form>
+
+</div>
 
 <?php
-        $total += $item['price'];
-    }
 
-    echo "<h2 style='width:100%; text-align:center;'>Total: ₹$total</h2>";
+$total += $item['price'];
+
+}
+
+echo "<h2 style='width:100%; text-align:center;'>Total: ₹$total</h2>";
 
 } else {
-    echo "<p style='text-align:center;'>Cart is Empty</p>";
+
+echo "<p style='text-align:center;'>Cart is Empty</p>";
+
 }
+
 ?>
 
-    </div>
+</div>
 </section>
 
-
 <br>
+
 <a href="index.php">Continue Shopping</a>
 
 <footer>
-    <p>© 2026 Fashionhub | All Rights Reserved</p>
+<p>© 2026 Fashionhub | All Rights Reserved</p>
 </footer>
 
 </body>
