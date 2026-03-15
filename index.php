@@ -42,7 +42,7 @@ $_SESSION['cart'][] = [
         <a href="women.php">Women</a>
         <a href="kids.php">Kids</a>
         <a href="profile.php">Profile</a>
-
+        <a href="about.php">About Us</a>
         <a href="cart.php" style="color:white; text-decoration:none; font-size:18px;">
             🛒 Cart (<?php echo count($_SESSION['cart']); ?>)
         </a>
