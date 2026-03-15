@@ -125,7 +125,9 @@ if ($sort == 'price_asc') {
         <?php if(count($filtered_products)==0){ echo "<p style='text-align:center;'>No products found.</p>"; } ?>
     </div>
 </section>
+<button id="backToTop">↑ Top</button>
 
+<script src="backToTop.js"></script>
 <footer>
     <p>© 2026 Fashionhub | All Rights Reserved</p>
     <br>
