@@ -96,6 +96,8 @@ foreach($products as $item){
 
 <footer>
     <p>© 2026 Fashionhub | All Rights Reserved</p>
+    <br>
+    <a href="contact.php" style="color:white">Contact Us</a>
 </footer>
 
 </body>
